@@ -29,8 +29,8 @@ jobs:
       - name: Store artifacts
         run: |
           echo "${{ secrets.BIGHULK_SSH_KEY }}" > /tmp/bighulk_ssh_key
-          ssh hulk@bighulk.hulks.dev mkdir -p ${{ env.ARTIFACTS_PATH }}
-          scp ${{ env.IMAGE_PATH }} ${{ env.SDK_PATH }} hulk@bighulk.hulks.dev:${{ env.ARTIFACTS_PATH }}
+          ssh -oIdentityFile=/tmp/bighulk_ssh_key -oStrictHostKeyChecking=accept-new hulk@bighulk.hulks.dev mkdir -p ${{ env.ARTIFACTS_PATH }}
+          scp -oIdentityFile=/tmp/bighulk_ssh_key -oStrictHostKeyChecking=accept-new ${{ env.IMAGE_PATH }} ${{ env.SDK_PATH }} hulk@bighulk.hulks.dev:${{ env.ARTIFACTS_PATH }}
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
