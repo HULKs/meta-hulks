@@ -26,6 +26,7 @@ RUN apt-get update && \
         lz4 \
         nodejs \
         npm \
+        openssh-client \
         python3 \
         python3-git \
         python3-jinja2 \
