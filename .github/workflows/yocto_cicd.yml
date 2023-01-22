@@ -27,6 +27,8 @@ jobs:
       - name: Build SDK
         run: kas build --target nao-image --cmd populate_sdk meta-hulks/kas-project.yml
       - name: Store artifacts
+        env:
+          USER: ci
         run: |
           echo "${{ secrets.BIGHULK_SSH_KEY }}" > /tmp/bighulk_ssh_key
           ssh -oIdentityFile=/tmp/bighulk_ssh_key -oStrictHostKeyChecking=accept-new hulk@bighulk.hulks.dev mkdir -p ${{ env.ARTIFACTS_PATH }}
