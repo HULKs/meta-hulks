@@ -8,6 +8,10 @@ jobs:
     container:
       image: ghcr.io/hulks/yocto_release
       options: --user=1000:1000
+    env:
+      IMAGE_PATH: build/tmp/deploy/images/nao-v6/nao-image-HULKs-OS-${{ github.ref_name }}.ext3.gz.opn
+      SDK_PATH: build/tmp/deploy/sdk/HULKs-OS-toolchain-${{ github.ref_name }}.sh
+      ARTIFACTS_PATH: /mnt/raid1-0/tools/meta-hulks_artifacts/${{ github.sha }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,6 +26,11 @@ jobs:
         run: kas build --target nao-image --cmd build meta-hulks/kas-project.yml
       - name: Build SDK
         run: kas build --target nao-image --cmd populate_sdk meta-hulks/kas-project.yml
+      - name: Store artifacts
+        run: |
+          echo "${{ secrets.BIGHULK_SSH_KEY }}" > /tmp/bighulk_ssh_key
+          ssh hulk@bighulk.hulks.dev mkdir -p ${{ env.ARTIFACTS_PATH }}
+          scp ${{ env.IMAGE_PATH }} ${{ env.SDK_PATH }} hulk@bighulk.hulks.dev:${{ env.ARTIFACTS_PATH }}
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -29,6 +38,6 @@ jobs:
           name: HULKs-OS ${{ github.ref_name }}
           body: Flashable image containing HULKs-OS ${{ github.ref_name }} and the corresponding SDK with the toolchain and other tools targeting HULKs-OS, for instructions see https://hulks.de/hulk/setup/overview/
           files: |
-            build/tmp/deploy/images/nao-v6/nao-image-HULKs-OS-${{ github.ref_name }}.ext3.gz.opn
-            build/tmp/deploy/sdk/HULKs-OS-toolchain-${{ github.ref_name }}.sh
+            ${{ env.IMAGE_PATH }}
+            ${{ env.SDK_PATH }}
           fail_on_unmatched_files: true
