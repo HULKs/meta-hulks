@@ -18,6 +18,8 @@ jobs:
         with:
           fetch-depth: 0
           path: meta-hulks
+      - name: Clean temporary directories
+        run: rm -rf build/tmp
       - name: Checkout Yocto layers
         run: kas checkout meta-hulks/kas-project.yml
       - name: Populate aldebaran_binaries.tar.gz
@@ -26,6 +28,14 @@ jobs:
         run: kas build --target nao-image --cmd build meta-hulks/kas-project.yml
       - name: Build SDK
         run: kas build --target nao-image --cmd populate_sdk meta-hulks/kas-project.yml
+        - name: Setup SSH Keys and known_hosts
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan 88.198.72.202 >> ~/.ssh/known_hosts
+          ssh-agent -a /tmp/ssh_agent.sock > /dev/null
+          ssh-add - <<< "${{ secrets.SSH_KEY_DEPLOYMENT }}"
       - name: Store artifacts
         env:
           USER: ci
