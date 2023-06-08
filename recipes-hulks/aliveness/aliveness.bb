@@ -21,4 +21,4 @@ do_install:append () {
   install -m 0644 "${WORKDIR}/enp4s0-wait-online.service" "${D}${systemd_unitdir}/system/"
 }
 
-include aliveness-crates.bb
+require aliveness-crates.inc
