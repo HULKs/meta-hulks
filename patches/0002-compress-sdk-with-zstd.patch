@@ -1,5 +1,15 @@
+From 7d4a00a0e0301ca07f9745bd55f0a89dd55a80a3 Mon Sep 17 00:00:00 2001
+From: knoellle <konrad@familie-noelle.de>
+Date: Fri, 9 Jun 2023 12:44:30 +0200
+Subject: [PATCH] Compress sdk with zstd
+
+---
+ meta/classes-recipe/populate_sdk_base.bbclass | 10 +++++-----
+ meta/files/toolchain-shar-extract.sh          |  8 ++++----
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
 diff --git a/meta/classes-recipe/populate_sdk_base.bbclass b/meta/classes-recipe/populate_sdk_base.bbclass
-index 64a4a58bef..0561e1d2d7 100644
+index 1c619ef3cf..dfe568e9c7 100644
 --- a/meta/classes-recipe/populate_sdk_base.bbclass
 +++ b/meta/classes-recipe/populate_sdk_base.bbclass
 @@ -71,9 +71,9 @@ TOOLCHAIN_TARGET_TASK_ATTEMPTONLY ?= ""
@@ -12,12 +22,12 @@ index 64a4a58bef..0561e1d2d7 100644
 +SDK_ARCHIVE_TYPE ?= "tar.zst"
 +SDK_ZSTD_COMPRESSION_LEVEL ?= "-3"
 +SDK_ZSTD_OPTIONS ?= "-T0 ${SDK_ZSTD_COMPRESSION_LEVEL}"
+ SDK_ZIP_OPTIONS ?= "-y"
  
- # To support different sdk type according to SDK_ARCHIVE_TYPE, now support zip and tar.xz
- python () {
-@@ -83,8 +83,8 @@ python () {
+ 
+@@ -85,8 +85,8 @@ python () {
         # recommand to cd into input dir first to avoid archive with buildpath
-        d.setVar('SDK_ARCHIVE_CMD', 'cd ${SDK_OUTPUT}/${SDKPATH}; zip -r -y ${SDKDEPLOYDIR}/${TOOLCHAIN_OUTPUTNAME}.${SDK_ARCHIVE_TYPE} .')
+        d.setVar('SDK_ARCHIVE_CMD', 'cd ${SDK_OUTPUT}/${SDKPATH}; zip -r ${SDK_ZIP_OPTIONS} ${SDKDEPLOYDIR}/${TOOLCHAIN_OUTPUTNAME}.${SDK_ARCHIVE_TYPE} .')
      else:
 -       d.setVar('SDK_ARCHIVE_DEPENDS', 'xz-native')
 -       d.setVar('SDK_ARCHIVE_CMD', 'cd ${SDK_OUTPUT}/${SDKPATH}; tar ${SDKTAROPTS} -cf - . | xz ${SDK_XZ_OPTIONS} > ${SDKDEPLOYDIR}/${TOOLCHAIN_OUTPUTNAME}.${SDK_ARCHIVE_TYPE}')
