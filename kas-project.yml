@@ -8,7 +8,7 @@ repos:
     meta-hulks:
     meta-nao:
         url: "https://github.com/HULKs/meta-nao.git"
-        refspec: 68ebdbf38569d60792337fea2af932f389e7497e
+        refspec: 5650dafedddb4c67f1ef7cd5aa7a059da228040d
     poky:
         patches:
             0001-Rust-1.70:
