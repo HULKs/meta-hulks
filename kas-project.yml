@@ -11,9 +11,9 @@ repos:
         refspec: 68ebdbf38569d60792337fea2af932f389e7497e
     poky:
         patches:
-            0001-rust_1.65:
+            0001-Rust-1.70:
                 repo: "meta-hulks"
-                path: "patches/0001-rust_1.65.patch"
+                path: "patches/0001-Rust-1.70.patch"
             0002-compress-sdk-with-zstd:
                 repo: "meta-hulks"
                 path: "patches/0002-compress-sdk-with-zstd.patch"
