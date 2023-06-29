@@ -5,6 +5,7 @@ jobs:
     name: Yocto CI/CD
     runs-on:
       - self-hosted
+      - v3
     container:
       image: ghcr.io/hulks/yocto_release
       options: --user=1000:1000
