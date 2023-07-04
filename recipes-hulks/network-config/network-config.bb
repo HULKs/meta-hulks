@@ -5,6 +5,7 @@ SRC_URI = " \
             file://id_map.json \
             file://configure_network \
             file://network-config.service \
+            file://SPL_HULKs.psk \
           "
 
 do_install() {
@@ -14,6 +15,7 @@ do_install() {
     install -m 0755 ${WORKDIR}/configure_network ${D}${sbindir}/
     install -d ${D}${systemd_unitdir}/system/
     install -m 0644 ${WORKDIR}/network-config.service ${D}${systemd_unitdir}/system/
+    install -m 0600 ${WORKDIR}/SPL_HULKs.psk ${D}/var/lib/iwd/
 }
 
 FILES:${PN} = " \
