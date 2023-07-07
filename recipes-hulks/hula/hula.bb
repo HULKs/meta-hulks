@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/COPYING;md5=5b4473596678d62d9d83096273
 inherit cargo
 
 SRC_URI += "git://github.com/HULKs/hulk.git;branch=main;protocol=https"
-SRCREV = "233c15cdb4f58be01f5b31f789b0ca3bbe613c89"
+SRCREV = "8b319a5879526119098fc6505c136d10dda73991"
 S = "${WORKDIR}/git/tools/hula"
 CARGO_SRC_DIR = "proxy"
 
