@@ -4,7 +4,7 @@ LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/COPYING;md5=5b4473596678d62d9d83096273422c8c"
 
 inherit cargo
-SRC_URI += "git://github.com/hulks/hulk.git;branch=add-breeze;protocol=https"
+SRC_URI += "git://github.com/hulks/hulk.git;branch=main;protocol=https"
 SRCREV = "3788aa0556d85248bb9bca2f72a98c080bb5debd"
 S = "${WORKDIR}/git/tools/breeze"
 
