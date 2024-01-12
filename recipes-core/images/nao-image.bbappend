@@ -6,6 +6,7 @@ CORE_IMAGE_EXTRA_INSTALL += " \
                               aliveness \
                               alsa-lib \
                               alsa-state \
+                              breeze \
                               compilednn \
                               hula \
                               hulk \
