@@ -1,3 +1,4 @@
+SRC_URI += " \
     crate://crates.io/aho-corasick/1.1.2 \
     crate://crates.io/bindgen/0.63.0 \
     crate://crates.io/bitflags/1.3.2 \
@@ -53,3 +54,4 @@
     crate://crates.io/windows_x86_64_gnullvm/0.52.0 \
     crate://crates.io/windows_x86_64_msvc/0.48.5 \
     crate://crates.io/windows_x86_64_msvc/0.52.0 \
+"
