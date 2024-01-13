@@ -33,5 +33,4 @@ do_install:append() {
   install -m 0644 ${WORKDIR}/breeze.service ${D}${systemd_unitdir}/system/
 }
 
-
 require breeze-crates.inc
