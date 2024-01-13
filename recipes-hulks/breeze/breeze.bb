@@ -11,9 +11,12 @@ S = "${WORKDIR}/git/tools/breeze"
 inherit pkgconfig
 
 DEPENDS += " \
+             cgos \
+             clang-native \
              systemd \
            "
 RDEPENDS:${PN} += " \
+                    cgos \
                     systemd \
                   "
 
@@ -23,7 +26,7 @@ SRC_URI += " \
            "
 
 inherit systemd
-
+export BINDGEN_EXTRA_CLANG_ARGS="-I ${STAGING_INCDIR}"
 do_install:append() {
   install -d ${D}${systemd_unitdir}/system/
   install -m 0644 ${WORKDIR}/breeze.service ${D}${systemd_unitdir}/system/
