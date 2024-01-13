@@ -26,6 +26,7 @@ SRC_URI += " \
            "
 
 inherit systemd
+# Needed because bindgen does not find cgos.h
 export BINDGEN_EXTRA_CLANG_ARGS="-I ${STAGING_INCDIR}"
 do_install:append() {
   install -d ${D}${systemd_unitdir}/system/
