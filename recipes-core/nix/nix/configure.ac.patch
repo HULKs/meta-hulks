@@ -1,0 +1,29 @@
+diff --git a/configure.ac b/configure.ac
+index 281ba2c32..c58e0f2fd 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -347,8 +347,23 @@ AC_ARG_ENABLE(doc-gen, AS_HELP_STRING([--disable-doc-gen],[disable documentation
+   doc_generate=$enableval, doc_generate=yes)
+ AC_SUBST(doc_generate)
+ 
++
+ # Look for lowdown library.
+-PKG_CHECK_MODULES([LOWDOWN], [lowdown >= 0.9.0], [CXXFLAGS="$LOWDOWN_CFLAGS $CXXFLAGS"])
++AC_ARG_ENABLE([markdown], AS_HELP_STRING([--enable-markdown], [Enable Markdown rendering in the Nix binary (requires lowdown) [default=auto]]),
++  enable_markdown=$enableval, enable_markdown=auto)
++AS_CASE(["$enable_markdown"],
++  [yes | auto], [
++    PKG_CHECK_MODULES([LOWDOWN], [lowdown >= 0.9.0], [
++      CXXFLAGS="$LOWDOWN_CFLAGS $CXXFLAGS"
++      have_lowdown=1
++      AC_DEFINE(HAVE_LOWDOWN, 1, [Whether lowdown is available and should be used for Markdown rendering.])
++    ], [
++      AS_IF([test "x$enable_markdown" == "xyes"], [AC_MSG_ERROR([--enable-markdown was specified, but lowdown was not found.])])
++    ])
++  ],
++  [no], [have_lowdown=],
++  [AC_MSG_ERROR([bad value "$enable_markdown" for --enable-markdown, must be one of: yes, no, auto])])
++
+ 
+ # Setuid installations.
+ AC_CHECK_FUNCS([setresuid setreuid lchown])

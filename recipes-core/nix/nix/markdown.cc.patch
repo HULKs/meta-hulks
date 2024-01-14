@@ -1,0 +1,32 @@
+diff --git a/src/libcmd/markdown.cc b/src/libcmd/markdown.cc
+index 8b3bbc1b5..e0d5ba0fc 100644
+--- a/src/libcmd/markdown.cc
++++ b/src/libcmd/markdown.cc
+@@ -4,14 +4,15 @@
+ #include "terminal.hh"
+
+ #include <sys/queue.h>
++#if HAVE_LOWDOWN
+ #include <lowdown.h>
+-
++#endif
+ namespace nix {
+
+ std::string renderMarkdownToTerminal(std::string_view markdown)
+ {
+     int windowWidth = getWindowSize().second;
+-
++#if HAVE_LOWDOWN
+     struct lowdown_opts opts {
+         .type = LOWDOWN_TERM,
+         .maxdepth = 20,
+@@ -48,6 +49,9 @@ std::string renderMarkdownToTerminal(std::string_view markdown)
+         throw Error("allocation error while rendering Markdown");
+
+     return filterANSIEscapes(std::string(buf->data, buf->size), !shouldANSI());
++#else
++    return std::string(markdown);
++#endif
+ }
+
+ }
