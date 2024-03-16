@@ -17,3 +17,6 @@ repos:
             0002-compress-sdk-with-zstd:
                 repo: "meta-hulks"
                 path: "patches/0002-compress-sdk-with-zstd.patch"
+    meta-onnx:
+        url: "git@github.com:tkfu/meta-onnx.git"
+        refspec: master
